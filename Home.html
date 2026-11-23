@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSKK Sơ Cấp (初级) - Master Learning Portal</title>
+  <style>
+    :root {
+      --primary: #be123c;
+      --primary-hover: #9f1239;
+      --primary-light: #fff1f2;
+      --secondary: #0f766e;
+      --secondary-light: #f0fdfa;
+      --accent: #b45309;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* HERO HEADER */
+    .hero {
+      background: linear-gradient(135deg, #701a75 0%, #881337 40%, #be123c 100%);
+      color: #fff;
+      padding: 48px 20px 40px;
+      box-shadow: 0 10px 25px -5px rgba(190, 18, 60, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .hero-desc {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 750px;
+      margin-bottom: 24px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      padding: 12px 20px;
+      min-width: 140px;
+    }
+    .hero-stat-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fef08a;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: 600;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    /* SECTION TITLE */
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* EXAM GRID */
+    .exam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .exam-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .exam-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: #cbd5e1;
+    }
+    .exam-card.ready {
+      border-top: 4px solid var(--primary);
+    }
+    .exam-card.locked {
+      opacity: 0.75;
+      background: #fafafa;
+    }
+    .exam-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .tag-ready {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .tag-locked {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+    .exam-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .exam-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .exam-features {
+      list-style: none;
+      font-size: 13px;
+      color: #334155;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .exam-features li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .exam-features li::before {
+      content: "✓";
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .btn-open-exam {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-open-exam:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(190, 18, 60, 0.3);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Nền Tảng Luyện Khẩu Ngữ Tương Tác</div>
+      <h1 class="hero-title">Luyện Thi HSKK Sơ Cấp Điểm Cao (Bí Kíp Đạt 80+ HSKK)</h1>
+      <p class="hero-desc">
+        Hệ thống số hoá toàn diện giáo trình chuẩn HSKK Sơ Cấp (NXB Thanh Niên): Tương tác trực tiếp, Audio phát âm Neural bản ngữ, Pinyin song ngữ, bài văn mẫu đạt điểm tối đa và cẩm nang ngữ pháp phân tích chuyên sâu.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">12</div>
+          <div class="hero-stat-label">Đề Thi Mô Phỏng</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">323</div>
+          <div class="hero-stat-label">File Audio MP3</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">80+</div>
+          <div class="hero-stat-label">Mục Tiêu Điểm Số</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Offline-First</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <div class="section-title-row">
+      <h2 class="section-title">📚 Danh Mục Đề Thi Mô Phỏng (模拟试卷)</h2>
+      <span style="font-size:13px; color:var(--text-muted);">Sắp xếp theo thứ tự giáo trình</span>
+    </div>
+
+    <div class="exam-grid">
+      <!-- DE 1: READY -->
+      <div class="exam-card ready" style="border-top: 4px solid #2563eb;">
+        <div>
+          <span class="exam-tag tag-ready">ĐÃ SẴN SÀNG — PHIÊN BẢN HOÀN THIỆN 2.0 (107 AUDIO & 48 BÀI TẬP MỞ RỘNG)</span>
+          <h3 class="exam-name">Đề Mô Phỏng 1 (模拟试卷一)</h3>
+          <p class="exam-desc">
+            Toàn bộ 27 câu hỏi gốc theo chuẩn đề thi HSKK Sơ Cấp (15 câu Nghe nhắc lại, 10 câu Nghe trả lời, 2 câu Tự luận dài) kết hợp cùng 48 bài tập mở rộng có hệ thống chấm điểm tức thì.
+          </p>
+          <ul class="exam-features">
+            <li>107 file MP3 giọng đọc Neural bản ngữ (48 audio gốc + 59 audio bài tập mở rộng)</li>
+            <li>Phiên âm Pinyin chuẩn có thanh điệu & Dịch nghĩa tiếng Việt</li>
+            <li>2 Bài văn mẫu HSKK 80+ kèm 20 Điểm ngữ pháp trọng điểm</li>
+            <li>48 Bài tập bổ trợ mở rộng: Thanh điệu, Sắp xếp từ, Sửa lỗi ngữ pháp, Dàn ý & Liên từ</li>
+            <li>Hệ thống chấm điểm song song: 100 điểm đề gốc + 160 điểm mở rộng</li>
+            <li>Tự động lưu và khôi phục tiến độ làm bài (practice_progress.js)</li>
+          </ul>
+        </div>
+        <a href="de1_interactive.html" class="btn-open-exam" style="background: linear-gradient(135deg, #1e40af, #2563eb);">👉 Bắt đầu làm bài Đề 1 (Thanh Lam)</a>
+      </div>
+
+      <!-- DE 2: READY -->
+      <div class="exam-card ready" style="border-top: 4px solid #0d9488;">
+        <div>
+          <span class="exam-tag tag-ready">ĐÃ SẴN SÀNG — CHUẨN ĐỒNG BỘ (108 AUDIO & 48 BÀI TẬP MỞ RỘNG)</span>
+          <h3 class="exam-name">Đề Mô Phỏng 2 (模拟试卷二)</h3>
+          <p class="exam-desc">
+            Chủ điểm Bạn thân & Thói quen trước khi đi ngủ. Tăng 20% độ khó so với Đề 1, câu dài hơn và ngữ cảnh giao tiếp sâu sắc hơn.
+          </p>
+          <ul class="exam-features">
+            <li>108 file MP3 giọng đọc Neural bản ngữ chất lượng cao</li>
+            <li>Phiên âm Pinyin chuẩn có thanh điệu & Dịch nghĩa tiếng Việt</li>
+            <li>2 Bài văn mẫu HSKK 80+ (Bạn thân & Trước khi ngủ) kèm 20 Điểm ngữ pháp</li>
+            <li>48 Bài tập mở rộng có chấm điểm tức thì (Thanh điệu, Sắp xếp từ, Sửa lỗi)</li>
+            <li>Hệ thống chấm điểm song song: 100 điểm đề gốc + 160 điểm mở rộng</li>
+            <li>Menu không cuộn ngang, mã màu sắc riêng & Tự lưu bài học</li>
+          </ul>
+        </div>
+        <a href="de2_interactive.html" class="btn-open-exam" style="background: linear-gradient(135deg, #065f46, #0d9488);">👉 Bắt đầu làm bài Đề 2 (Ngọc Lục Bảo)</a>
+      </div>
+
+      <!-- DE 3: READY -->
+      <div class="exam-card ready" style="border-top: 4px solid #4f46e5;">
+        <div>
+          <span class="exam-tag tag-ready">ĐÃ SẴN SÀNG — CHUẨN ĐỒNG BỘ (108 AUDIO & 48 BÀI TẬP MỞ RỘNG)</span>
+          <h3 class="exam-name">Đề Mô Phỏng 3 (模拟试卷三)</h3>
+          <p class="exam-desc">
+            Chủ điểm Lý do học tiếng Trung & Ẩm thực truyền thống (Vịt quay Bắc Kinh). Tăng 25-30% độ khó, nâng cao khả năng diễn đạt khẩu ngữ tự nhiên.
+          </p>
+          <ul class="exam-features">
+            <li>108 file MP3 giọng đọc Neural bản ngữ chất lượng cao</li>
+            <li>Phiên âm Pinyin chuẩn có thanh điệu & Dịch nghĩa tiếng Việt</li>
+            <li>2 Bài văn mẫu HSKK 80+ (Học tiếng Trung & Ẩm thực) kèm 20 Điểm ngữ pháp</li>
+            <li>48 Bài tập mở rộng có chấm điểm tức thì (Phát âm, Câu chữ 把, Liên từ)</li>
+            <li>Hệ thống chấm điểm song song: 100 điểm đề gốc + 160 điểm mở rộng</li>
+            <li>Menu không cuộn ngang, mã màu sắc riêng & Tự lưu bài học</li>
+          </ul>
+        </div>
+        <a href="de3_interactive.html" class="btn-open-exam" style="background: linear-gradient(135deg, #3730a3, #4f46e5);">👉 Bắt đầu làm bài Đề 3 (Tím Indigo)</a>
+      </div>
+    </div>
+
+    <!-- GUIDE SECTION -->
+    <div style="background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow-sm);">
+      <h3 style="font-size:18px; font-weight:800; color:var(--primary); margin-bottom:12px;">💡 Hướng Dẫn Tự Học Hiệu Quả Với Nền Tảng</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; font-size:14px; color:#334155; line-height:1.7;">
+        <div>
+          <b>1. Luyện tai nghe trước khi nhìn chữ:</b>
+          Ở Phần 1 và Phần 2, bấm nút loa nghe câu mẫu từ 1-2 lần để bắt âm và ngữ điệu, sau đó mới bấm "Hiện chữ Hán & Dịch" để đối chiếu.
+        </div>
+        <div>
+          <b>2. Bắt chước ngữ điệu (Shadowing):</b>
+          Tập nói nhại lại theo ngữ điệu của người bản ngữ. Chú ý các thanh điệu khó như thanh 3 (đọc nửa thanh 3) và biến điệu của <code>一 (yī)</code>, <code>不 (bù)</code>.
+        </div>
+        <div>
+          <b>3. Ghi nhớ các cấu trúc liên từ ăn điểm:</b>
+          Đọc kỹ 20 Điểm Ngữ Pháp Cốt Lõi ở Tab 5 và học thuộc bài văn mẫu ở Tab 4 để làm vốn từ cho phần thi nói tự do.
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Hệ sinh thái Giáo dục Tương tác HSKK & Destination • 100% Offline-First • Tối ưu hoá cho Chrome, Edge, Safari và Thiết bị Di Động
+    </footer>
+  </main>
+
+</body>
+</html>

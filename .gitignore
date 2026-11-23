@@ -1,0 +1,16 @@
+# Large archives & raw books
+*.rar
+*.zip
+*.7z
+*.pdf
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary scripts / logs
+*.log
+*.tmp
+__pycache__/
